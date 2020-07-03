@@ -1,21 +1,16 @@
 # TgsnApi
 
-**TODO: Add description**
+A simple API made in Elixir with PostgreSQL as the database. Work in progress of a personal project.
 
 ## Installation
 
-If [available in Hex](https://hex.pm/docs/publish), the package can be installed
-by adding `tgsn_api` to your list of dependencies in `mix.exs`:
+To run the application you must have an instance of PostgreSQL up and running.
 
-```elixir
-def deps do
-  [
-    {:tgsn_api, "~> 0.1.0"}
-  ]
-end
-```
+If it's your first time trying to run the application, you must: 
+- Get the dependencies with `mix deps.get`
+- Create the repository with `mix ecto.create`
+- Run the migrations with `mix ecto.migrate`
 
-Documentation can be generated with [ExDoc](https://github.com/elixir-lang/ex_doc)
-and published on [HexDocs](https://hexdocs.pm). Once published, the docs can
-be found at [https://hexdocs.pm/tgsn_api](https://hexdocs.pm/tgsn_api).
+## Running the application
 
+After all that you are able to run the application with `iex -S mix`, with the server running on port: 3000. To change the port (or other configuration propeties you deem necessary), you can change the values in the `config.exs` file. 
