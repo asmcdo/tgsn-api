@@ -4,7 +4,7 @@ A simple API made in Elixir with PostgreSQL as the database. Work in progress of
 
 ## Installation
 
-To run the application you must have an instance of PostgreSQL up and running.
+To run the application you must have an instance of PostgreSQL up and running, also (and quite obviously), you need to have Elixir installed. 
 
 If it's your first time trying to run the application, you must: 
 - Get the dependencies with `mix deps.get`
