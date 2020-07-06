@@ -2,7 +2,7 @@ defmodule TgsnApi.Router do
   use Plug.Router
   use Plug.ErrorHandler
 
-  alias TgsnApi.{Repo, User, Query}
+  alias TgsnApi.{Repo, User, Operation}
 
   plug(:match)
 
@@ -18,25 +18,26 @@ defmodule TgsnApi.Router do
     send_resp(conn, 200, "Welcome")
   end
 
-  # Gets existing user's info from database 
+  # Gets existing user's info from database
   get "/user_id" do
     {:ok, user} = Query.get_user(conn.query_string)
     send_resp(conn, 200, inspect(user))
   end
 
-  # Creates a new user in our database
+  # Creates a new user in the database
   post "/signup" do
-    IO.inspect(conn.params)
-
-    new_user =
-      %User{}
-      |> User.changeset(conn.body_params)
-      |> Repo.insert!()
+    Operation.create_user(conn.params)
 
     send_resp(conn, 200, "User created successfully.")
   end
 
-  # If route does not exist, 
+  post "/login" do
+    Operation.login(conn.body_params)
+
+    send_resp(conn, 200, "Login successful!")
+  end
+
+  # If route does not exist,
   match _ do
     send_resp(conn, 404, "Not found")
   end
