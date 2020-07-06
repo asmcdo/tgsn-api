@@ -20,7 +20,7 @@ defmodule TgsnApi.Router do
 
   # Gets existing user's info from database
   get "/user_id" do
-    {:ok, user} = Query.get_user(conn.query_string)
+    {:ok, user} = Operation.get_user(conn.query_string)
     send_resp(conn, 200, inspect(user))
   end
 

@@ -1,9 +1,9 @@
 defmodule TgsnApi.Operation do
   alias TgsnApi.{Repo, User}
 
-  use Ecto.Repo
+  alias TgsnApi.Repo
 
-  import Ecto.Changeset, Bycript
+  import Ecto.{Query, Changeset}
 
   def get_user(user_id) do
     Repo.get(User, user_id)
@@ -24,7 +24,7 @@ defmodule TgsnApi.Operation do
   end
 
   defp encode_password(%Ecto.Changeset{valid?: true, changes: %{password: password}} = changeset) do
-    change(changeset, add_hash(password))
+    #change(changeset, add_hash(password))
   end
 
   defp encode_password(changeset) do
