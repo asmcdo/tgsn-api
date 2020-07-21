@@ -21,6 +21,10 @@ defmodule TgsnApi.Operation do
 
   def login(user) do
     #TODO: verify if user exists in DB.
+    user_credentials = 
+    %Ecto.Changeset{valid?: true, changes: %{email: user[email], password: user[password]}}
+    |> validate_fields
+    |> validate_credentials
   end
 
   defp encode_password(%Ecto.Changeset{valid?: true, changes: %{password: password}} = changeset) do
@@ -31,8 +35,13 @@ defmodule TgsnApi.Operation do
     changeset
   end
 
-  defp validate_password(user) do
-    #TODO: check if  given password is correct
+  defp validate_credentials(%Ecto.Changeset{valid?: true, changes: %{password: password}} = changeset) do
+    #TODO decrypt password
+    query = from u in User, where: (u.email == changeset.email) and (u.password == changeset.password)
+  end
+
+  defp validate_credentials(changeset) do
+    changeset
   end
 
   defp validate_fields(changeset) do

@@ -32,7 +32,7 @@ defmodule TgsnApi.Router do
   end
 
   post "/login" do
-    Operation.login(conn.body_params)
+    Operation.login(conn.body_params) #Expects an e-mail and a password
 
     send_resp(conn, 200, "Login successful!")
   end
