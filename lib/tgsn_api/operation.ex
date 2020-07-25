@@ -1,7 +1,6 @@
 defmodule TgsnApi.Operation do
   alias TgsnApi.{Repo, User}
-
-  alias TgsnApi.Repo
+  alias Bcrypt
 
   import Ecto.{Query, Changeset}
 
@@ -16,28 +15,28 @@ defmodule TgsnApi.Operation do
     |> User.changeset(new_user)
     |> validate_fields
     |> encode_password
-    |> Repo.insert!()
+    |> Repo.insert!
   end
 
   def login(user) do
     #TODO: verify if user exists in DB.
-    user_credentials = 
-    %Ecto.Changeset{valid?: true, changes: %{email: user[email], password: user[password]}}
+    %Ecto.Changeset{valid?: true, changes: %{email: user["email"], password: user["password"]}}
     |> validate_fields
     |> validate_credentials
   end
 
   defp encode_password(%Ecto.Changeset{valid?: true, changes: %{password: password}} = changeset) do
-    #change(changeset, add_hash(password))
+    IO.puts "CHEGUEI AQUI HEIN UHUUUUUUUUUUUU"
+    change(changeset, Bcrypt.add_hash(password))
   end
 
   defp encode_password(changeset) do
     changeset
   end
 
-  defp validate_credentials(%Ecto.Changeset{valid?: true, changes: %{password: password}} = changeset) do
+  defp validate_credentials(%Ecto.Changeset{valid?: true} = changeset) do
     #TODO decrypt password
-    query = from u in User, where: (u.email == changeset.email) and (u.password == changeset.password)
+    query = from u in User, where: (u.email == ^changeset.email) and (u.password == ^changeset.password)
   end
 
   defp validate_credentials(changeset) do
@@ -45,12 +44,12 @@ defmodule TgsnApi.Operation do
   end
 
   defp validate_fields(changeset) do
-    put_change(changeset, :valid?, verify_existing_fields(changeset))
+    %{changeset | valid?: !verify_existing_fields(changeset)}
   end
 
   defp verify_existing_fields(changeset) do
     # Naive approach, still to find a better way to implement it
-    query = from u in User, where: (u.username == ^changeset.username) or (u.email == ^changeset.email)
+    query = from u in User, where: (u.username == ^changeset.changes.username) or (u.email == ^changeset.changes.email)
     Repo.exists?(query)
   end
 end

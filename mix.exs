@@ -26,6 +26,7 @@ defmodule TgsnApi.MixProject do
       {:poison, "~> 4.0"},
       {:ecto_sql, "~> 3.4"},
       {:postgrex, "~> 0.15.5"},
+      {:bcrypt_elixir, "~> 2.2"}
     ]
   end
 end
