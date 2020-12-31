@@ -26,7 +26,6 @@ defmodule TgsnApi.Operation do
   end
 
   defp encode_password(%Ecto.Changeset{valid?: true, changes: %{password: password}} = changeset) do
-    IO.puts "CHEGUEI AQUI HEIN UHUUUUUUUUUUUU"
     change(changeset, Bcrypt.add_hash(password))
   end
 
